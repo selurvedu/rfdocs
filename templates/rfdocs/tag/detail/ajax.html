@@ -1,0 +1,57 @@
+{% load rfdocs_tags %}
+<article class="{% dynamic_content %}" data-type="tag">
+    <div class="clearfix">
+        <header class="page-header item-well offset3 span5">
+            <hgroup class="text-center">
+                <h4 class="item-name">{{ rftag.name }}</h4>
+            </hgroup>
+        </header>
+    </div>
+    <table class="table">
+        <caption>List of Libraries tagged by {{ rftag.name }}</caption>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Version</th>
+            <th>Status</th>
+            <th>Keywords</th>
+            <th>Tags</th>
+            <th>Date Added</th>
+            <th>Lat Updated</th>
+            <th>Added By User</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for version in rftag.versions.all %}
+            <tr class="{{ version.status|status_indicator|default_if_none:'info'}}">
+                <td><a href="{{ version.get_absolute_url }}">{{ version.name }}</a></td>
+                <td><a href="{{ version.library.get_absolute_url }}">{{ version.library.name }}</a></td>
+                <td>{{ version.status }}</td>
+                <td>{{ version.keywords.count }}</td>
+                <td>
+                    <ul class="unstyled">
+                        {# TODO: exclude current tag from list of tags #}
+                        {% for tag in version.tags.all %}
+                            <li>
+                                <a href="{{ tag.get_absolute_url }}">{{ tag.name }}</a>
+                            </li>
+                        {% empty %}
+                            <li>---</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>{{ version.date_added }}</td>
+                <td>{{ version.date_modified }}</td>
+                <td>{{ version.added_by }}</td>
+            </tr>
+        {% empty %}
+            {% include "rfdocs/mixins/no_entries_found.html" with cols_num=8|get_range %}
+        {% endfor %}
+        </tbody>
+    </table>
+</article>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(this).attr("title", "{% generate_page_title 'Libraries tagged by' rftag.name %}");
+    });
+</script>

@@ -1,0 +1,53 @@
+{% extends 'rfdocs/base/base.html' %}
+{% load static from staticfiles %}
+{% load compress %}
+
+{% block scripts_load %}
+    {{ block.super }}
+    {% if SETTINGS_DEBUG %}
+        <script src="{% static 'js/devel/main/module.js' %}"></script>
+        <script src="{% static 'js/devel/main/init.js' %}"></script>
+        <script src="{% static 'js/devel/main/logger.js' %}"></script>
+        <script src="{% static 'js/devel/main/locators.js' %}"></script>
+        <script src="{% static 'js/devel/main/filter.js' %}"></script>
+        <script src="{% static 'js/devel/main/toolbar.js' %}"></script>
+        <script src="{% static 'js/devel/main/item.js' %}"></script>
+        <script src="{% static 'js/devel/main.js' %}"></script>
+    {% else %}
+        {% compress js %}
+            <script src="{% static 'js/min/main/module.min.js' %}"></script>
+            <script src="{% static 'js/min/main/init.min.js' %}"></script>
+            <script src="{% static 'js/min/main/logger.min.js' %}"></script>
+            <script src="{% static 'js/min/main/locators.min.js' %}"></script>
+            <script src="{% static 'js/min/main/filter.min.js' %}"></script>
+            <script src="{% static 'js/min/main/toolbar.min.js' %}"></script>
+            <script src="{% static 'js/min/main/item.min.js' %}"></script>
+            <script src="{% static 'js/min/main.min.js' %}"></script>
+        {% endcompress %}
+    {% endif %}
+{% endblock scripts_load %}
+
+{% block search_form %}
+    {% include "rfdocs/forms/search.html" with placeholder="Filter" %}
+{% endblock search_form %}
+
+{% block aside %}
+    <div id="filter">
+        {% include "rfdocs/forms/filter.html" %}
+    </div>
+{% endblock aside %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            UIAPP.shared.Item.init();
+            UIAPP.shared.Filter.init();
+            UIAPP.shared.Filter.addSearchCapability('#search-input',
+                    '#search-icon',
+                    '#search-result-count',
+                    '#search-clear');
+            UIAPP.shared.Filter.registerListeners();
+        });
+    </script>
+{% endblock scripts %}

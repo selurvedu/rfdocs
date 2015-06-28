@@ -1,0 +1,107 @@
+{% load rfdocs_tags %}
+{% get_settings_param 'USE_GOOGLE_ANALYTICS' as USE_GA %}
+
+<article class="{% dynamic_content %}" data-type="library" data-nodekey="{% generate_node_key rflibraryversion.library.name rfversion.name %}">
+    <div class="clearfix">
+        {% include "rfdocs/mixins/filter_active.html" with span=4 %}
+        <header class="item-well span4">
+            <h3 class="item-name">
+                <a data-filter-active="false" href="#filter-library-{{ rflibraryversion.name }}">{{ rflibraryversion.name }}</a>
+            </h3>
+            <ul class="item-breadcrumb">
+                <li><a href="{{ rflibraryversion.library.get_absolute_url }}">{{ rflibraryversion.library.name }}</a></li>
+            </ul>
+        </header>
+    </div>
+    {% include "rfdocs/mixins/filter_tags.html" with filter_tags=rflibraryversion.tags.all klass="inline" %}
+    <ul class="unstyled">
+        {% if rflibraryversion.source_url %}
+            <li>
+                <a href="{{ rflibraryversion.source_url }}" target="_blank" rel="tooltip" data-tooltip-placement="right"
+                   title="Original HTML documentation"><i class="icon-external-link"></i> Open HTML document</a>
+            </li>
+        {% endif %}
+    </ul>
+    <div class="accordion" id="accordion-outer">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-outer" href="#keywords-shortcuts">
+                    Keywords Shortcuts
+                </a>
+            </div>
+            <div id="keywords-shortcuts" class="accordion-body collapse">
+                <div class="accordion-inner">
+                    <ul class="unstyled inline">
+                        {% for keyword in rflibraryversion.keywords.all %}
+                            <li>
+                                <a href="{{ keyword.get_absolute_url }}">{{ keyword.name }}</a>
+                            </li>
+                        {% empty %}
+                            <li>There are no keywords in this library.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-outer" href="#library-doc">
+                    Library Documentation
+                </a>
+            </div>
+            <div id="library-doc" class="accordion-body collapse">
+                <div class="accordion-inner">
+                    <div class="inner-libdoc">
+                        {{ rflibraryversion.parsed_doc|safe }}
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-outer" href="#library-related">
+                    Related Libraries
+                </a>
+            </div>
+            <div id="library-related" class="accordion-body collapse">
+                <div class="accordion-inner">
+                    <ul class="unstyled inline">
+                        {% for library in rflibraryversion.similar.all %}
+                            <li>
+                                <a href="{{ library.get_absolute_url }}">{{ library }}</a>
+                            </li>
+                        {% empty %}
+                            <li class="text-warning">No entries found</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-outer" href="#library-meta">
+                    Meta Information
+                </a>
+            </div>
+            <div id="library-meta" class="accordion-body collapse">
+                <div class="accordion-inner">
+                    <dl class="dl-horizontal">
+                        <dt>Number of keywords</dt>
+                        <dd>{{ rflibraryversion.keywords.count }}</dd>
+                        <dt>Generated on</dt>
+                        <dd><time datetime="{{ rflibraryversion.date_generated }}">{{ rflibraryversion.date_generated }}</time></dd>
+                        <dt>Added to the system</dt>
+                        <dd><time datetime="{{ rflibraryversion.date_added }}">{{ rflibraryversion.date_added }}</time></dd>
+                        <dt>Last updated</dt>
+                        <dd><time datetime="{{ rflibraryversion.date_modified }}">{{ rflibraryversion.date_modified }}</time></dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(this).attr("title", "{% generate_page_title rflibraryversion.library.name rflibraryversion.name %}");
+        UIAPP.shared.Item.registerListeners();
+        addBootstrapTooltipls($("[rel=tooltip]"));
+    });
+</script>
+{% if USE_GA %}
+    {% include 'mysite/ganalitycs.html' %}
+{% endif %}

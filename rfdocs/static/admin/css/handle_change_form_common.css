@@ -1,0 +1,38 @@
+.hide {
+    display: none;
+}
+
+.alert-danger {
+    width: 25%;
+    color: #b94a48;
+    background-color: #f2dede;
+    border-color: #eed3d7;
+    padding: 8px 35px 8px 14px;
+    margin-bottom: 20px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.alert-danger h4 {
+    color: #b94a48;
+}
+
+.disabled a {
+    color: #999999;
+    opacity: .5;
+    text-decoration: line-through;
+}
+
+.disabled a:hover,
+.disabled a:focus {
+    opacity: .5;
+    text-decoration: line-through;
+    cursor: default;
+    background-color: transparent;
+}
+
+.text-warning {
+  color: #b94a48 !important;
+}

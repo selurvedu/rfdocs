@@ -1,0 +1,170 @@
+{% load static from staticfiles %}
+{% load misc rfdocs_tags %}
+{% load compress %}
+{% get_settings_param 'DEBUG' as SETTINGS_DEBUG %}
+{% get_settings_param 'USE_GOOGLE_ANALYTICS' as USE_GA %}
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7 lang="en""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8 lang="en""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9 lang="en""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <title>{% block page_title %}Robot Framework Documentation{% endblock page_title %}</title>
+    {% block meta_head %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="Robot Framework Documentation">
+        <meta name="viewport" content="width=device-width">
+        <meta name="author" content="{% AUTHOR %}">
+        <link rel="author" href="humans.txt" />
+    {% endblock meta_head %}
+    {# Stylesheets #}
+    {% block styles_load %}
+        {% if SETTINGS_DEBUG %}
+            <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.css' %}">
+            <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap-responsive.css' %}">
+            <link rel="stylesheet" href="{% static 'css/font-awesome/css/font-awesome.css' %}">
+            <link rel="stylesheet" href="{% static 'css/dynatree/robot/ui.dynatree.css' %}">
+            <link rel="stylesheet" href="{% static 'css/robot/default.css' %}">
+            <link rel="stylesheet" href="{% static 'css/mixins.css' %}">
+            <link rel="stylesheet" href="{% static 'css/main/main.css' %}">
+        {% else %}
+            {% compress css %}
+                <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
+                <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap-responsive.min.css' %}">
+                <link rel="stylesheet" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">
+                <link rel="stylesheet" href="{% static 'css/dynatree/robot/ui.dynatree.css' %}">
+                <link rel="stylesheet" href="{% static 'css/robot/default.css' %}">
+                <link rel="stylesheet" href="{% static 'css/mixins.css' %}">
+            {% endcompress %}
+            <link rel="stylesheet" href="{% static 'css/main/main.css' %}">
+        {% endif %}
+    {% endblock styles_load %}
+
+    {# JS #}
+    {% block scripts_load %}
+        {% if SETTINGS_DEBUG %}
+            <script src="{% static 'js/devel/lib/modernizr-2.6.2.js' %}"></script>
+            <script src="{% static 'js/devel/lib/jquery-1.9.1.js' %}"></script>
+            <script src="{% static 'js/devel/lib/jquery-ui-1.10.3.custom.js' %}"></script>
+            <script src="{% static 'js/devel/lib/jquery.cookie.js' %}"></script>
+            <script src="{% static 'js/devel/mixins.js' %}"></script>
+            <script src="{% static 'js/devel/lib/jquery.dynatree-1.2.4.js' %}"></script>
+            <script src="{% static 'js/devel/lib/bootstrap.js' %}"></script>
+        {% else %}
+            {% comment %}
+                Maybe it would be better to use CDN?
+            {% endcomment %}
+            {% compress js %}
+                <script src="{% static 'js/min/lib/modernizr-2.6.2-respond-1.1.0.min.js' %}"></script>
+                <script src="{% static 'js/min/lib/jquery-1.9.1.min.js' %}"></script>
+                <script src="{% static 'js/min/lib/jquery-ui-1.10.3.custom.min.js' %}"></script>
+                <script src="{% static 'js/min/lib/jquery.cookie.min.js' %}"></script>
+                <script src="{% static 'js/min/mixins.min.js' %}"></script>
+                <script src="{% static 'js/min/lib/jquery.dynatree-1.2.4.min.js' %}"></script>
+                <script src="{% static 'js/min/lib/bootstrap.min.js' %}"></script>
+            {% endcompress%}
+        {% endif %}
+        <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    {% endblock scripts_load %}
+</head>
+
+<body>
+<!--[if lt IE 7]>
+        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+<!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
+{% block main_header %}
+    <header class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            {% block brand %}{% endblock brand %}
+            {# The `search_form` block will be used by tree and filter pages, but will have different implementations #}
+            {% block search_form %}
+            {% endblock search_form %}
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <nav id="navigation-bar" class="nav-collapse collapse offset2 pull-right">
+                    <h1 class="hidden">Navigation Bar</h1>
+                    <ul class="nav">
+                        {# Special menu items for tree and filter views. Not present on all pages. #}
+                        {% block nav_bar_inner %}
+                        {% endblock nav_bar_inner %}
+
+                        {# The rest of the menu should be present on all pages #}
+                        <li class="{% active 'browse' %}"><a href="{% url 'browse' %}"><i class="icon-compass icon-white"></i> Browse</a></li>
+                        <li class="{% active 'api_root' %}"><a href="{% url 'api_root' %}" target="_blank">REST API</a></li>
+                        <li class="{% active 'libraries_list_filter' %}"><a href="{% url 'libraries_list_filter' %}" target="_blank">Libraries</a></li>
+                        <li class="{% active 'home' %}"><a href="{% url 'home' %}"><i class="icon-home icon-white"></i> Home</a></li>
+                        <li><a href="https://github.com/andriyko/sublime-robot-framework-assistant" target="_blank"><i class="icon-external-link"></i> Plugin</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+{% endblock main_header %}
+{% block main_container %}
+    <div class="container-fluid">
+        {# Click the icon to show/hide sidebar. Present on all pages. #}
+        <div id="toggle-sidebar"><i class="icon-chevron-sign-left icon-3x"></i></div>
+
+        {# Container that holds sidebar and main content columns.  #}
+        <div class="row-fluid">
+            <div id="left-span" class="span3">
+                <aside class="sidebar-nav-fixed-scrolled">
+                    <h1 class="hidden">Aside</h1>
+                    {# Sidebar with its content for tree, filter, main menu view ... etc. #}
+                    {% block aside %}
+                    {% endblock aside %}
+                </aside>
+            </div>
+            <div id="right-span" class="span9">
+                <section id="dynamic-data-container">
+                    <h1 class="hidden">Dynamic content</h1>
+                    {# Main content will be placed here. #}
+                    {% block dynamic_content %}
+                    {% endblock dynamic_content %}
+                </section>
+            </div>
+        </div>
+    </div>
+{% endblock main_container %}
+{% block main_footer %}
+    <footer class="row-fluid" id="fixed-footer">
+        <p>
+            Copyright &copy; {% COPYRIGHT_DATE %} <a href="#">{% SITE_NAME %}</a>
+            <span class="sep"> | </span>{% AUTHOR %}<span class="sep"> | </span>All rights reserved.
+        </p>
+    </footer> <!-- #footer -->
+{% endblock main_footer %}
+
+{# All modals should be here. #}
+{% block modals %}
+{% endblock modals %}
+<div class="loading-modal"></div>
+
+{# This part is shared across all pages. #}
+{% block scripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#toggle-sidebar").on("click", function() {
+                $(this).find("i").toggleClass("icon-chevron-sign-left icon-chevron-sign-right");
+                $("#left-span").toggleClass("span3 hidden");
+                $("#right-span").toggleClass("span11 span9");
+                var tree_search = $("#tree-search-input"),
+                        filter_search = $("#filter-search-input");
+                tree_search.prop("disabled",!tree_search.prop("disabled"));
+                filter_search.prop("disabled",!filter_search.prop("disabled"));
+            });
+        });
+    </script>
+    {% if USE_GA %}
+        {% include 'mysite/ganalitycs.html' %}
+    {% endif %}
+{% endblock scripts %}
+</body>
+</html>

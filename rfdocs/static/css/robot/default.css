@@ -1,0 +1,229 @@
+/*
+.keyword-doc is a container that wraps keyword documentation(3rd td of row) in keyword details template
+**/
+.keyword-doc {
+    color: black;
+}
+.keyword-doc.libdoc {
+    white-space: pre-wrap;
+}
+.keyword-doc a.name, .keyword-doc span.name {
+    font-style: italic;
+}
+.keyword-doc a, .keyword-doc a:link, .keyword-doc a:visited {
+    color: #c30;
+}
+.keyword-doc a:hover, .keyword-doc a:active {
+    text-decoration: underline;
+    color: black;
+}
+.keyword-doc div.shortcuts {
+    margin: 1em 0em;
+    font-size: 0.9em;
+}
+.keyword-doc div.shortcuts a {
+    text-decoration: none;
+    color: black;
+}
+.keyword-doc div.shortcuts a:hover {
+    text-decoration: underline;
+}
+.keyword-doc table.keywords {
+    border: 2px solid black;
+    border-collapse: collapse;
+    empty-cells: show;
+    margin: 0.3em 0em;
+    width: 100%;
+}
+.keyword-doc table.keywords th, table.keywords td {
+    border: 2px solid black;
+    padding: 0.2em;
+    vertical-align: top;
+}
+.keyword-doc table.keywords th {
+    background: #bbb;
+    color: black;
+}
+.keyword-doc table.keywords td.kw {
+    width: 150px;
+    font-weight: bold;
+}
+.keyword-doc table.keywords td.arg {
+    width: 300px;
+    font-style: italic;
+}
+.keyword-doc table.doc {
+    border: 1px solid black;
+    background: transparent;
+    border-collapse: collapse;
+    empty-cells: show;
+    font-size: 0.85em;
+}
+.keyword-doc table.doc td {
+    border: 1px solid black;
+    padding: 0.1em 0.3em;
+    height: 1.2em;
+
+}
+
+
+/*
+.inner-libdoc is a container that wraps library documentation in library details template
+**/
+.inner-libdoc {
+    overflow: auto;
+    font-family: sans-serif;
+}
+
+.inner-libdoc .libdoc {
+  background: white;
+  color: black;
+  font-size: small;
+  font-family: sans-serif;
+  padding: 0.1em 0.5em;
+}
+
+.inner-libdoc h1 {
+  font-size: 24.5px;
+}
+
+.inner-libdoc h2 {
+  font-size: 17.5px;
+}
+
+.inner-libdoc h3 {
+  font-size: 14px;
+}
+
+.inner-libdoc h4 {
+  font-size: 14px;
+}
+
+.inner-libdoc .libdoc {
+  white-space: pre-wrap;
+}
+.inner-libdoc a.name, .inner-libdoc span.name {
+  font-style: italic;
+}
+.inner-libdoc a, .inner-libdoc a:link, .inner-libdoc a:visited {
+  color: #c30;
+}
+.inner-libdoc a:hover, .inner-libdoc a:active {
+  text-decoration: underline;
+  color: black;
+}
+.inner-libdoc div.shortcuts {
+  margin: 1em 0em;
+  font-size: 0.9em;
+}
+.inner-libdoc div.shortcuts a {
+  text-decoration: none;
+  color: black;
+}
+.inner-libdoc div.shortcuts a:hover {
+  text-decoration: underline;
+}
+.inner-libdoc table.keywords {
+  border: 2px solid black;
+  border-collapse: collapse;
+  empty-cells: show;
+  margin: 0.3em 0em;
+  width: 100%;
+}
+.inner-libdoc table.keywords th, .inner-libdoc table.keywords td {
+  border: 2px solid black;
+  padding: 0.2em;
+  vertical-align: top;
+}
+.inner-libdoc table.keywords th {
+  background: #bbb;
+  color: black;
+}
+.inner-libdoc table.keywords td.kw {
+  width: 150px;
+  font-weight: bold;
+}
+.inner-libdoc table.keywords td.arg {
+  width: 300px;
+  font-style: italic;
+}
+.inner-libdoc table.doc {
+  border: 1px solid black;
+  background: transparent;
+  border-collapse: collapse;
+  empty-cells: show;
+  font-size: 0.85em;
+}
+.inner-libdoc table.doc td {
+  border: 1px solid black;
+  padding: 0.1em 0.3em;
+  height: 1.2em;
+
+}
+
+
+/*
+Styles from new Robot Framework 2.8 (or 2.7) docs
+**/
+
+.keyword-doc table.robotdoc, .keyword-doc pre.robotdoc, .keyword-doc hr.robotdoc {
+    margin: 0.5em 1em;
+}
+.keyword-doc table.robotdoc {
+    border: 1px solid gray;
+    background: transparent;
+    border-collapse: collapse;
+    empty-cells: show;
+    font-size: 0.85em;
+}
+.keyword-doc table.robotdoc td {
+    border: 1px solid gray;
+    padding: 0.1em 0.3em;
+    height: 1.2em;
+}
+.keyword-doc pre.robotdoc {
+    font-size: 1.1em;
+    background: #F4F4FF;
+}
+.keyword-doc img.robotdoc {
+    border: 1px solid gray;
+}
+.keyword-doc hr.robotdoc {
+    background: gray;
+    height: 1px;
+    border: 0;
+}
+
+
+
+
+.inner-libdocc table.robotdoc {
+    border: 1px solid gray;
+    background: transparent;
+    border-collapse: collapse;
+    empty-cells: show;
+    font-size: 0.85em;
+}
+.inner-libdoc table.robotdoc td {
+    border: 1px solid gray;
+    padding: 0.1em 0.3em;
+    height: 1.2em;
+}
+.inner-libdoc pre.robotdoc {
+    font-size: 1.1em;
+    background: #F4F4FF;
+}
+.inner-libdoc img.robotdoc {
+    border: 1px solid gray;
+}
+.inner-libdoc hr.robotdoc {
+    background: gray;
+    height: 1px;
+    border: 0;
+}
+
+
+
+
+
+

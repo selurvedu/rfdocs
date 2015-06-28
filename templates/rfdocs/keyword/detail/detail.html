@@ -1,0 +1,7 @@
+{% extends 'rfdocs/base/browse.html' %}
+{% block title %}
+    {{ block.super }} :: {{ rfkeyword.library.name }} :: {{ rfkeyword.name }}
+{% endblock title %}
+{% block dynamic_content %}
+    {% include 'rfdocs/keyword/detail/ajax.html' %}
+{% endblock dynamic_content %}

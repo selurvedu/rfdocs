@@ -1,0 +1,44 @@
+{% load rfdocs_tags bootstrap_pagination %}
+{% get_settings_param 'USE_GOOGLE_ANALYTICS' as USE_GA %}
+
+<article class="{% dynamic_content %}" data-type="libraries-list">
+    <div class="clearfix">
+        <header class="item-well offset3 span6">
+            <h3 class="text-center item-name">List of Libraries</h3>
+        </header>
+    </div>
+    <table class="table table-hover">
+        <thead>
+        <tr class="muted">
+            <th>Library</th>
+            <th>Codename</th>
+            <th>Versions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for library in libraries_list %}
+            <tr>
+                <td><a href="{{ library.get_absolute_url }}">{{ library.name }}</a></td>
+                <td>{{ library.codename }}</td>
+                <td>
+                    <ul class="inline">
+                        {% for version in library.versions.not_draft %}
+                            <li>
+                                <a href="{{ version.get_absolute_url }}">{{ version.name }}</a>,
+                            </li>
+                        {% empty %}
+                            <li>---</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        {% empty %}
+            {% include "rfdocs/mixins/no_entries_found.html" with cols_num=3|get_range %}
+        {% endfor %}
+    </table>
+    {% bootstrap_paginate page_obj range=10 alignment="center" show_first_last="true" %}
+</article>
+
+{% if USE_GA %}
+    {% include 'mysite/ganalitycs.html' %}
+{% endif %}

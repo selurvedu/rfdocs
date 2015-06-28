@@ -1,0 +1,7 @@
+{% extends 'rfdocs/base/filter.html' %}
+{% block title %}
+    {{ block.super }} :: List Of Tags
+{% endblock title %}
+{% block dynamic_content %}
+    {% include 'rfdocs/tag/list/ajax.html' %}
+{% endblock dynamic_content %}
