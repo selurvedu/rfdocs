@@ -1,0 +1,78 @@
+{% load rfdocs_tags %}
+{% get_settings_param 'USE_GOOGLE_ANALYTICS' as USE_GA %}
+
+<article class="{% dynamic_content %}" data-type="version" data-nodekey="{% generate_node_key rflibrary.name %}">
+    <div class="clearfix">
+        {% include "rfdocs/mixins/filter_active.html" with span=4 %}
+        <header class="item-well span4">
+            <h3 class="item-name">
+                <a data-filter-active="false" href="#filter-library-{{ rflibrary.name }}">{{ rflibrary.name }}</a>
+            </h3>
+        </header>
+    </div>
+
+    <table class="table table-hover">
+        <caption class="text-right">
+            <small class="text-info text-right">
+                There are <span class="badge badge-info">{{ number_of_keywords }}</span> keyword{{ number_of_keywords|pluralize }} in <span class="badge badge-info"> {{ number_of_versions }}</span> versions{{ number_of_versions|pluralize }}.
+            </small>
+        </caption>
+        <thead>
+        <tr class="muted">
+            <th>Library</th>
+            <th>Status</th>
+            <th>Keywords</th>
+            <th>Related Libraries</th>
+            <th><i class="icon-filter"></i> Tags</th>
+            <th>Document Generated On</th>
+            <th>Last Updated In System</th>
+            <th>Source</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for version in rflibrary.versions.not_draft %}
+            <tr>
+                <td>
+                    <a href="{{ version.get_absolute_url }}">{{ version.name }}</a>
+                </td>
+                <td>
+                    <span class="label label-{{ version.status|status_indicator|default_if_none:'info'}}">
+                        {{ version.status }}
+                    </span>
+                </td>
+                <td>{{ version.keywords.count }}</td>
+                <td>
+                    <ul class="unstyled">
+                        {% for related_library in version.similar.all %}
+                            <li>
+                                <a href="{{ related_library.get_absolute_url }}">{{ related_library }}</a>
+                            </li>
+                        {% empty %}
+                            <li>---</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    {% include "rfdocs/mixins/filter_tags_no_ico.html" with filter_tags=version.tags.all klass="unstyled" %}
+                </td>
+                <td>{{ version.date_generated }}</td>
+                <td>{{ version.date_modified }}</td>
+                <td><a href="{{ version.source_url }}" title="{{ version.source_url }}" target="_blank"><i class="icon-external-link"></i> View </a></td>
+            </tr>
+        {% empty %}
+            {% include "rfdocs/mixins/no_entries_found.html" with cols_num=8|get_range %}
+        {% endfor %}
+        </tbody>
+    </table>
+</article>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(this).attr("title", "{% generate_page_title rflibrary.name %}");
+        UIAPP.shared.Item.registerListeners();
+        addBootstrapTooltipls($("[rel=tooltip]"));
+    });
+</script>
+{% if USE_GA %}
+    {% include 'mysite/ganalitycs.html' %}
+{% endif %}
+

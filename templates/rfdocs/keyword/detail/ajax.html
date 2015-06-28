@@ -1,0 +1,53 @@
+{% load rfdocs_tags %}
+{% get_settings_param 'USE_GOOGLE_ANALYTICS' as USE_GA %}
+
+<article class="{% dynamic_content %}" data-type="keyword" data-nodekey="{% generate_node_key rfkeyword.version.library.name rfkeyword.version.name rfkeyword.name %}">
+    <div class="clearfix">
+        {% include "rfdocs/mixins/filter_active.html" with span=3 %}
+        <header class="item-well span6">
+            <h3 class="item-name">
+                <a data-filter-active="false" href="#filter-keyword-{{ rfkeyword.name }}">{{ rfkeyword.name }}</a>
+            </h3>
+            <ul class="info item-breadcrumb">
+                <li>
+                    <a data-nodekey="{% generate_node_key rfkeyword.version.library.name %}" href="{{ rfkeyword.version.library.get_absolute_url }}">
+                        {{ rfkeyword.version.library.name }}
+                    </a>
+                    <span class="divider">/</span>
+                </li>
+                <li>
+                    <a data-nodekey="{% generate_node_key rfkeyword.version.library.name rfkeyword.version.name %}" href="{{ rfkeyword.version.get_absolute_url }}">
+                        {{ rfkeyword.version.name }}
+                    </a>
+                </li>
+            </ul>
+        </header>
+        {% include "rfdocs/mixins/in_stack.html" with span=3 %}
+    </div>
+    {% include "rfdocs/mixins/filter_tags.html" with filter_tags=rfkeyword.version.tags.all klass="inline" %}
+    <section class="keyword-args">
+        <h4 class="item-subheading" rel="tooltip" data-tooltip-placement="right" title="Click to select content below">Arguments</h4>
+        <p>{{ rfkeyword.arguments|default_if_none:'---'|safe }}</p>
+    </section>
+    <section class="keyword-doc">
+        <h4 class="item-subheading" rel="tooltip" data-tooltip-placement="right" title="Click to select content below">Documentation</h4>
+        <p>
+            {{ rfkeyword.documentation|safe }}
+        </p>
+    </section>
+</article>
+<script type="text/javascript">
+    $(document).ready(function() {
+        {% comment %}
+        #TODO generating title using js is bad for SEO, need to find some workaround
+        Cannot extend from base template as it will cause double load of this content,
+        thus cannot override page_title block.
+        {% endcomment %}
+        $(this).attr("title", "{% generate_page_title rfkeyword.version.library.name rfkeyword.version.name rfkeyword.name %}");
+        UIAPP.shared.Item.registerListeners();
+        addBootstrapTooltipls($("[rel=tooltip]"));
+    });
+</script>
+{% if USE_GA %}
+    {% include 'mysite/ganalitycs.html' %}
+{% endif %}

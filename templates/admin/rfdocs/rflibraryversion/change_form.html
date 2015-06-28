@@ -1,0 +1,19 @@
+{% extends "admin/change_form.html" %}
+{% load static %}
+{% load i18n admin_static admin_modify %}
+{% get_static_prefix as STATIC_PREFIX %}
+{% load static from staticfiles %}
+{% block extrahead %}
+    {{ block.super }}
+{% endblock extrahead %}
+
+{% block object-tools-items %}
+    {% for button in buttons %}
+        <li><a href="{{ button.func_name }}/">{{ button.short_description }}</a></li>
+    {% endfor %}
+    {{ block.super }}
+{% endblock object-tools-items %}
+
+{% block after_related_objects %}
+    {{ block.super }}
+{% endblock after_related_objects %}

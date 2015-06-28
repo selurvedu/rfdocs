@@ -1,0 +1,26 @@
+{% comment %}
+    #TODO
+    It would be good to have search terms (like version, library and tag)
+    to be visually wrapped, like in Dash.app for keyword.
+    That requires special hooks with css and js, one possible way
+    to achieve this is to use `contenteditable` on div and emulate that div as `input` element.
+    Then wrap terms within `span` tag and style them as needed.
+    Too much work as for now.
+{% endcomment %}
+<form id="search-form" class="navbar-search form-search pull-left span3">
+    <em id="search-icon" class="icon-search icon-light"></em>
+    <span id="search-result-count" class="badge-results badge-inverse hidden">&nbsp;</span>
+    <input id="search-input" form="search-form" autocomplete="off" autofocus="true" type="search" class="span3 search-query passed" placeholder="{{ placeholder }}"/>
+    <em id="search-clear" class="icon-remove-circle icon-light icon-large hidden"></em>
+</form>
+
+<script>
+    $('#search-icon').popover({
+        title: 'Search help',
+        content: 'Search is case insensitive. You can use `terms` to limit search results. ' +
+                 'A `term` can be `Version`, `Library` or `Tag`. For example: `builtin:call` - ' +
+                 'find all keywords that contain word `call`, limit search to library(ies) with name `BuiltIn`.',
+        placement: 'bottom',
+        container: '#navigation-bar'
+    })
+</script>

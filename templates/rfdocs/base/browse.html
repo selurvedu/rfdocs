@@ -1,0 +1,117 @@
+{% extends 'rfdocs/base/base.html' %}
+{% load static from staticfiles %}
+{% load get_settings_param from rfdocs_tags %}
+{% load compress %}
+{% get_settings_param 'DEBUG' as SETTINGS_DEBUG %}
+
+{% block scripts_load %}
+    {{ block.super }}
+    {% if SETTINGS_DEBUG %}
+        <script src="{% static 'js/devel/main/module.js' %}"></script>
+        <script src="{% static 'js/devel/main/init.js' %}"></script>
+        <script src="{% static 'js/devel/main/logger.js' %}"></script>
+        <script src="{% static 'js/devel/main/locators.js' %}"></script>
+        <script src="{% static 'js/devel/main/tree.js' %}"></script>
+        <script src="{% static 'js/devel/main/toolbar.js' %}"></script>
+        <script src="{% static 'js/devel/main/stack.js' %}"></script>
+        <script src="{% static 'js/devel/main/item.js' %}"></script>
+        <script src="{% static 'js/devel/main.js' %}"></script>
+    {% else %}
+        {% compress js %}
+            <script src="{% static 'js/min/main/module.min.js' %}"></script>
+            <script src="{% static 'js/min/main/init.min.js' %}"></script>
+            <script src="{% static 'js/min/main/logger.min.js' %}"></script>
+            <script src="{% static 'js/min/main/locators.min.js' %}"></script>
+            <script src="{% static 'js/min/main/tree.min.js' %}"></script>
+            <script src="{% static 'js/min/main/toolbar.min.js' %}"></script>
+            <script src="{% static 'js/min/main/stack.min.js' %}"></script>
+            <script src="{% static 'js/min/main/item.min.js' %}"></script>
+            <script src="{% static 'js/min/main.min.js' %}"></script>
+        {% endcompress %}
+    {% endif %}
+{% endblock scripts_load %}
+
+{% block search_form %}
+    {% include "rfdocs/forms/search.html" with placeholder="Search" %}
+{% endblock search_form %}
+
+{% block aside %}
+    <div id="tree"></div>
+{% endblock aside %}
+
+{% block nav_bar_inner %}
+    <li class="hidden action-required">
+        <a id="toolbar-reload-location" href="#reload-location">
+            <i class="icon-refresh icon-white"></i> Reload
+        </a>
+    </li>
+    <li id="toolbar-dataset-menu" class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="icon-cogs icon-white"></i> Dataset
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+                <a id="toolbar-dataset-edit" href="#dataset-edit">
+                    <i class="icon-lock icon-white"> Edit</i>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li id="toolbar-stack-menu" class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <span class="badge" id="toolbar-stack-counter">0</span> Stack
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+                <a id="toolbar-stack-show" href="#modal-stack" class="dropdown-toggle" role="button" data-toggle="modal" data-target="#modal-stack">
+                    <i class="icon-eye-open"></i> Show
+                </a>
+            </li>
+            <li>
+                <a id="toolbar-stack-copy" href="#stack-copy">
+                    <i class="icon-copy"></i> Copy
+                </a>
+            </li>
+            <li>
+                <a id="toolbar-stack-save" href="#stack-save">
+                    <i class="icon-save"></i> Save
+                </a>
+            </li>
+            <li>
+                <a id="toolbar-stack-restore" href="#stack-restore">
+                    <i class="icon-archive"></i> Restore
+                </a>
+            </li>
+            <li>
+                <a id="toolbar-stack-clear" href="#stack-clear">
+                    <i class="icon-trash set-icon-color-red"></i> Clear
+                </a>
+            </li>
+        </ul>
+    </li>
+{% endblock nav_bar_inner %}
+
+{% block modals %}
+    {{ block.super }}
+    {% include 'rfdocs/stack.html' %}
+{% endblock modals %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            UIAPP.shared.Item.init();
+            UIAPP.shared.Toolbar.init();
+            UIAPP.shared.Stack.init();
+            UIAPP.shared.Tree.init(null, {debugLevel:0});
+            UIAPP.shared.Tree.addSearchCapability('#search-input',
+                    '#search-icon',
+                    '#search-result-count',
+                    '#search-clear');
+            UIAPP.shared.Tree.registerListeners();
+            addBootstrapTooltipls($("[rel=tooltip]"));
+        });
+    </script>
+{% endblock scripts %}

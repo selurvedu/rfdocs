@@ -1,0 +1,10 @@
+<ul class="{{ klass }} filter-tags">
+    <i class="icon-tags"></i>
+    {% for tag in filter_tags %}
+        <li>
+            <a data-filter-active="false" href="#filter-tag-{{ tag.name }}">{{ tag.name }}</a>
+        </li>
+    {% empty %}
+        <li>---</li>
+    {% endfor %}
+</ul>

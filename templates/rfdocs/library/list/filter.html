@@ -1,0 +1,7 @@
+{% extends 'rfdocs/base/filter.html' %}
+{% block title %}
+    {{ block.super }} :: List Of Libraries
+{% endblock title %}
+{% block dynamic_content %}
+    {% include 'rfdocs/library/list/ajax.html' %}
+{% endblock dynamic_content %}
