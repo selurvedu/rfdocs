@@ -3,7 +3,7 @@
 import os
 import sys
 
-settings_file = os.environ.get("DJANGO_SETTINGS_MODULE", "rfdocset.settings.dev")
+settings_file = os.environ.get("DJANGO_SETTINGS_MODULE", "rfdocset.settings.base")
 
 
 class SettingsModuleWrapper(object):
