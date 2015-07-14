@@ -3,7 +3,10 @@
 import os
 import sys
 
-settings_file = os.environ.get("DJANGO_SETTINGS_MODULE", "rfdocset.settings.dev")
+settings_file = os.environ.get("DJANGO_SETTINGS_MODULE")
+# Default value of DJANGO_SETTINGS_MODULE is set in rfdocset/wsgi.py
+if settings_file == "rfdocset.settings":
+    settings_file = "rfdocset.settings.dev"
 
 
 class SettingsModuleWrapper(object):
